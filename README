@@ -1,0 +1,69 @@
+NAME
+    POE::Component::CPANIDX - A POE mechanism for querying the CPANIDX
+
+SYNOPSIS
+DESCRIPTION
+CONSTRUCTOR
+    "spawn"
+        Creates a new POE::Component::CPANIDX session.
+
+        Takes one optional argument "alias" so you can set an alias on the
+        component to send it events later.
+
+        Returns an object reference which the following methods can be used
+        on.
+
+METHODS
+    "session_id"
+        Takes no arguments. Returns the POE::Session ID of the component.
+
+    "shutdown"
+        Takes no arguments. Terminates the component.
+
+    "query_idx"
+
+        "event"
+            The name of the "event" that should be sent to the requesting
+            session with the reply from the CPANIDX server. This is
+            required.
+
+        See "OUTPUT EVENTS" below for what will be sent to your session in
+        reply.
+
+        You may also set arbitary keys to pass arbitary data along with your
+        request. These must be prefixed with an underscore "_".
+
+INPUT EVENTS
+    These are POE events that the component will accept.
+
+    "shutdown"
+        Takes no arguments. Terminates the component.
+
+    "query_idx"
+
+        "event"
+            The name of the "event" that should be sent to the requesting
+            session with the reply from the CPANIDX server. This is
+            required.
+
+        See "OUTPUT EVENTS" below for what will be sent to your session in
+        reply.
+
+        You may also set arbitary keys to pass arbitary data along with your
+        request. These must be prefixed with an underscore "_".
+
+OUTPUT EVENTS
+    The component will send an event in response to "query_idx". "ARG0" of
+    the event will be a "HASHREF" containing the key/values of the original
+    request ( including any arbitary key/values passed ).
+
+AUTHOR
+    Chris "BinGOs" Williams <chris@bingosnet.co.uk>
+
+LICENSE
+    Copyright © Chris Williams
+
+    This module is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
