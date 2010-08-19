@@ -11,7 +11,9 @@ my @tests = (
   [ mod => 'POE' ],
   [ auth => 'BINGOS' ],
   [ dists => 'BINGOS' ],
+  [ corelist => 'CPANPLUS' ],
   [ 'topten' ],
+  [ 'mirrors' ],
 );
 
 plan tests => 3 + ( scalar @tests * 2 );

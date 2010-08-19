@@ -9,14 +9,16 @@ use HTTP::Request::Common;
 use File::Spec::Unix;
 use vars qw($VERSION);
 
-$VERSION = '0.02';
+$VERSION = '0.06';
 
 my $cmds = {
-  mod     => 1,
-  auth    => 1,
-  dists   => 1,
+  mod       => 1,
+  auth      => 1,
+  corelist  => 1,
+  dists     => 1,
   timestamp => 0,
-  topten  => 0,
+  topten    => 0,
+  mirrors   => 0,
 };
 
 # Stolen from POE::Wheel. This is static data, shared by all
@@ -296,13 +298,13 @@ The base url of the website that is running L<App::CPANIDX>. This is required.
 
 =item C<cmd>
 
-The query command to send to the server. This can be C<mod>, C<dists>, C<auth>, C<timestamp>
-or C<topten>. If no C<cmd> is specified the component will default to C<timestamp>. The first
+The query command to send to the server. This can be C<mod>, C<dists>, C<corelist>, C<auth>, C<timestamp>
+C<mirrors> or C<topten>. If no C<cmd> is specified the component will default to C<timestamp>. The first
 three commands require a C<search> term.
 
 =item C<search>
 
-The search term to use for the C<mod>, C<dists>, C<auth> commands.
+The search term to use for the C<mod>, C<dists>, C<auth>, C<corelist> commands.
 
 =back 
 
