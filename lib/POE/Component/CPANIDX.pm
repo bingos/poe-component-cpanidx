@@ -9,10 +9,11 @@ use HTTP::Request::Common;
 use File::Spec::Unix;
 use vars qw($VERSION);
 
-$VERSION = '0.06';
+$VERSION = '0.08';
 
 my $cmds = {
   mod       => 1,
+  dist      => 1,
   auth      => 1,
   corelist  => 1,
   dists     => 1,
