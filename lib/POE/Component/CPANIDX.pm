@@ -299,13 +299,13 @@ The base url of the website that is running L<App::CPANIDX>. This is required.
 
 =item C<cmd>
 
-The query command to send to the server. This can be C<mod>, C<dists>, C<corelist>, C<auth>, C<timestamp>
+The query command to send to the server. This can be C<mod>, C<dist>, C<dists>, C<corelist>, C<auth>, C<timestamp>
 C<mirrors> or C<topten>. If no C<cmd> is specified the component will default to C<timestamp>. The first
 three commands require a C<search> term.
 
 =item C<search>
 
-The search term to use for the C<mod>, C<dists>, C<auth>, C<corelist> commands.
+The search term to use for the C<mod>, C<dist>, C<dists>, C<auth>, C<corelist> commands.
 
 =back 
 
