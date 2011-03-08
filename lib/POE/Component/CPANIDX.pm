@@ -9,7 +9,7 @@ use HTTP::Request::Common;
 use File::Spec::Unix;
 use vars qw($VERSION);
 
-$VERSION = '0.08';
+$VERSION = '0.10';
 
 my $cmds = {
   mod       => 1,
@@ -47,7 +47,7 @@ sub spawn {
   my $self = bless \%opts, $package;
   $self->{session_id} = POE::Session->create(
   object_states => [
-     $self => { shutdown     => '_shutdown', 
+     $self => { shutdown     => '_shutdown',
                 query_idx    => '_query_idx',
      },
      $self => [ qw(_start _query_idx _dispatch _http_request _http_response) ],
@@ -72,7 +72,7 @@ sub _start {
   $self->{session_id} = $_[SESSION]->ID();
   if ( $self->{alias} ) {
      $kernel->alias_set( $self->{alias} );
-  } 
+  }
   else {
      $kernel->refcount_increment( $self->{session_id} => __PACKAGE__ );
   }
@@ -125,7 +125,7 @@ sub _query_idx {
 
   my $arg = $cmds->{ $args->{cmd} };
 
-  croak 
+  croak
   "'cmd' that was specified is unknown"
     unless defined $arg;
 
@@ -142,16 +142,16 @@ sub _query_idx {
 
 sub _http_request {
   my ($kernel,$self,$req) = @_[KERNEL,OBJECT,ARG0];
-  
   my $url = URI->new( $req->{url} );
+
   $url->path( File::Spec::Unix->catfile( $url->path, 'yaml', $req->{cmd}, ( $req->{search} ? $req->{search} : () ) ) );
 
   my $id = _allocate_identifier();
 
-  $kernel->post( 
-    $self->{_httpc}, 
-    'request', 
-    '_http_response', 
+  $kernel->post(
+    $self->{_httpc},
+    'request',
+    '_http_response',
     GET( $url->as_string ),
     "$id",
   );
@@ -190,7 +190,7 @@ sub _dispatch {
   my $event = delete $input->{event};
   $kernel->post( $session, $event, $input );
   $kernel->refcount_decrement( $session => __PACKAGE__ );
-  return;  
+  return;
 }
 
 qq[CAPTCH!];
@@ -206,42 +206,42 @@ POE::Component::CPANIDX - A POE mechanism for querying the CPANIDX
   use strict;
   use warnings;
   use POE qw(Component::CPANIDX);
-  
+
   my $url = shift or die;
   my $cmd = shift or die;
   my $search = shift;
-  
+
   my $idx = POE::Component::CPANIDX->spawn();
-  
+
   POE::Session->create(
     package_states => [
       main => [qw(_start _reply)],
     ],
     args => [ $url, $cmd, $search ],
   );
-  
+
   $poe_kernel->run();
   exit 0;
-  
+
   sub _start {
     my ($URL,$CMD,$SRCH) = @_[ARG0..ARG2];
-  
+
     $idx->query_idx(
       event  => '_reply',
       url    => $URL,
       cmd    => $CMD,
       search => $SRCH,
     );
-  
+
     return;
   }
-  
+
   sub _reply {
     my $resp = $_[ARG0];
-  
+
     use Data::Dumper;
     $Data::Dumper::Indent=1;
-  
+
     unless ( $resp->{error} ) {
        print Dumper( $resp->{data} );
     }
@@ -282,7 +282,7 @@ Takes no arguments. Returns the L<POE::Session> ID of the component.
 
 =item C<shutdown>
 
-Takes no arguments. Terminates the component. 
+Takes no arguments. Terminates the component.
 
 =item C<query_idx>
 
@@ -307,12 +307,12 @@ three commands require a C<search> term.
 
 The search term to use for the C<mod>, C<dist>, C<dists>, C<auth>, C<corelist> commands.
 
-=back 
+=back
 
 See C<OUTPUT EVENTS> below for what will be sent to your session in reply.
 
 You may also set arbitary keys to pass arbitary data along with your request. These must be
-prefixed with an underscore C<_>. 
+prefixed with an underscore C<_>.
 
 =back
 
@@ -324,7 +324,7 @@ These are POE events that the component will accept.
 
 =item C<shutdown>
 
-Takes no arguments. Terminates the component. 
+Takes no arguments. Terminates the component.
 
 =item C<query_idx>
 
@@ -349,12 +349,12 @@ three commands require a C<search> term.
 
 The search term to use for the C<mod>, C<dists>, C<auth> commands.
 
-=back 
+=back
 
 See C<OUTPUT EVENTS> below for what will be sent to your session in reply.
 
 You may also set arbitary keys to pass arbitary data along with your request. These must be
-prefixed with an underscore C<_>. 
+prefixed with an underscore C<_>.
 
 =back
 
