@@ -1,5 +1,7 @@
 package POE::Component::CPANIDX;
 
+#ABSTRACT: A POE mechanism for querying the CPANIDX
+
 use strict;
 use warnings;
 use Carp;
@@ -7,9 +9,6 @@ use POE qw(Component::Client::HTTP);
 use YAML::Tiny;
 use HTTP::Request::Common;
 use File::Spec::Unix;
-use vars qw($VERSION);
-
-$VERSION = '0.10';
 
 my $cmds = {
   mod       => 1,
@@ -37,7 +36,6 @@ sub _free_identifier {
   my $id = shift;
   delete $active_identifiers{$id};
 }
-
 
 sub spawn {
   my $package = shift;
@@ -195,11 +193,7 @@ sub _dispatch {
 
 qq[CAPTCH!];
 
-__END__
-
-=head1 NAME
-
-POE::Component::CPANIDX - A POE mechanism for querying the CPANIDX
+=pod
 
 =head1 SYNOPSIS
 
@@ -377,16 +371,6 @@ If there was an error of some sort then C<data> will not be defined and this wil
 indicating what the problem was.
 
 =back
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 

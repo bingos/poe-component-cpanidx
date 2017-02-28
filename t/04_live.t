@@ -21,7 +21,7 @@ plan tests => 3 + ( scalar @tests * 2 );
 use POE;
 use_ok('POE::Component::CPANIDX');
 
-use constant IDX => 'http://cpanidx.bingosnet.co.uk/cpanidx/';
+use constant IDX => 'http://cpanidx.org/cpanidx/';
 
 my $idx = POE::Component::CPANIDX->spawn();
 isa_ok($idx,'POE::Component::CPANIDX');
